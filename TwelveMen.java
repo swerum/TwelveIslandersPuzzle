@@ -17,11 +17,13 @@ public class TwelveMen {
         return true;
     }
 
-    //checks if for a given index, the algorithm returns the correct the result
+    //checks if for a given index, the algorithm returns the correct result
     private static boolean checkForIndex(int i, int weight, int outlyerWeight) {
         int[] arr = getRandomArray(i, 0, 1);
         int result = getIndexOfMan(arr);
-        if (i != result) System.out.println("If the man's index is "+i+", the algorithm returns "+result);
+        if (i != result) {
+            System.out.println("Warning: If the outlyer is at "+i+", the algorithm falsely returns "+result);
+        }
         return i == result;
     }
 
@@ -38,7 +40,7 @@ public class TwelveMen {
         int round1 = compareTwoGroupsOfFour(arr, 0, 1, 2, 3,    4, 5, 6, 7);
         int round2 = compareTwoGroupsOfFour(arr, 0, 1, 8, 10,   2, 3, 4, 9);
         int round3 = compareTwoGroupsOfFour(arr, 0, 5, 8, 9,    1, 2, 6, 11);
-        //helpful booleans: were 2 rounds nonzero and the same or nonzero and different
+        //helpful booleans: were 2 rounds the same
         boolean r1r2Same = round1 == round2;
         boolean r2r3Same = round2 == round3;
         boolean r1r3Same = round1 == round3;
