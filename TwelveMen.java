@@ -1,41 +1,42 @@
 public class TwelveMen {
 
     public static void main(String[] args) {
-        if (textCases()) System.out.println("All test Cases have passed!");
+        if (testCases()) System.out.println("All test Cases have passed!");
         else System.out.println("At least one test case has failed.");
     }
 
     //checks a bunch of different test cases
-    private static boolean textCases() {
+    private static boolean testCases() {
+        //check for each possible index of the outlier
         for (int i = 0; i < 12; i++) {
+            //if the outlier is heavier
             if (!checkForIndex(i, 0, 1)) return false;
+            //if the outlier is lighter
             if (!checkForIndex(i, 0, -1)) return false;
-            if (!checkForIndex(i, 2, 1)) return false;
-            if (!checkForIndex(i, 2, 3)) return false;
-            if (!checkForIndex(i, -2, -1)) return false;
         }
         return true;
     }
 
     //checks if for a given index, the algorithm returns the correct result
-    private static boolean checkForIndex(int i, int weight, int outlyerWeight) {
-        int[] arr = getRandomArray(i, 0, 1);
-        int result = getIndexOfMan(arr);
+    private static boolean checkForIndex(int i, int weight, int outlierWeight) {
+        int[] arr = getIslanders(i, 0, 1);
+        int result = getOutlier(arr);
         if (i != result) {
-            System.out.println("Warning: If the outlyer is at "+i+", the algorithm falsely returns "+result);
+            String errorMessage = "Warning: If the outlier is at "+i+", the algorithm falsely returns "+result;
+            System.err.println(errorMessage);
         }
         return i == result;
     }
 
-    //creates an array of length twelve with all islanders having the same weight except one, who has the outlyerWeight
-    private static int[] getRandomArray(int r, int weight, int outlyerWeight) {
+    //creates an array of length twelve with all islanders having the same weight except one, who has the outlierWeight
+    private static int[] getIslanders(int r, int weight, int outlierWeight) {
         int[] arr = new int[12];
         for (int i = 0; i < 12; i++) arr[i] = weight;
-        arr[r] = outlyerWeight;
+        arr[r] = outlierWeight;
         return arr;
     }
 
-    private static int getIndexOfMan(int[] arr) {
+    private static int getOutlier(int[] arr) {
         //our 3 comparisons
         int round1 = compareTwoGroupsOfFour(arr, 0, 1, 2, 3,    4, 5, 6, 7);
         int round2 = compareTwoGroupsOfFour(arr, 0, 1, 8, 10,   2, 3, 4, 9);
@@ -47,7 +48,7 @@ public class TwelveMen {
         
         //if the two sides are equal in round1
         if (round1 == 0) {
-            //none of the men weighed in round1 can be the outlyer --> 8,9,10,11
+            //none of the men weighed in round1 can be the outlier --> 8,9,10,11
             if (round2 == 0) {
                 //8, 9, 10 are excluded
                 return 11;
@@ -93,7 +94,7 @@ public class TwelveMen {
     }
 
     //returns 1 if first half is heavier, 0, if they're the same, -1 if the second half is heavier
-    private static int compareTwoGroupsOfFour(  int[] arr, int i0, int i1, int i2, int i3,  int k0, int k1, int k2, int k3) {
+    private static int compareTwoGroupsOfFour(int[] arr, int i0, int i1, int i2, int i3,  int k0, int k1, int k2, int k3) {
         int sideA = arr[i0] + arr[i1] + arr[i2] + arr[i3];
         int sideB = arr[k0] + arr[k1] + arr[k2] + arr[k3];
         return (sideA - sideB);
