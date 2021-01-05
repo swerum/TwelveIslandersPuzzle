@@ -1,3 +1,7 @@
+/* 
+    Code based on the explanation on:
+    https://medium.com/@mobz/12-islanders-puzzle-from-brooklyn-99-e56f06370153
+*/
 public class TwelveMen {
 
     public static void main(String[] args) {
